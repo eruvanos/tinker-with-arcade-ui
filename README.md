@@ -8,3 +8,4 @@ This repository contains my experiments with the arcade ui.
 |:-------------:|:----------------------------------------:|
 | image_slider  |     ![](image_slider/Recording.gif)      |
 | simple_button |     ![](simple_button/Recording.gif)     |
+|   toggle      |     ![](toggle/Recording.gif)     |
