@@ -80,12 +80,12 @@ class MyView(View):
 
         on_texture = arcade.load_texture("switch_green.png")
         off_texture = arcade.load_texture("switch_red.png")
-        self.button = UIImageToggle(on_texture=on_texture, off_texture=off_texture)
+        self.toggle = UIImageToggle(on_texture=on_texture, off_texture=off_texture)
 
-        # Add button to UIManager, use UIAnchorWidget defaults to center on screen
-        self.mng.add(UIAnchorWidget(child=self.button))
+        # Add toggle to UIManager, use UIAnchorWidget defaults to center on screen
+        self.mng.add(UIAnchorWidget(child=self.toggle))
 
-        @self.button.event("on_change")
+        @self.toggle.event("on_change")
         def print_oon_change(event: UIOnChangeEvent):
             print(f"New value {event.new_value}")
 
