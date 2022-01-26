@@ -1,5 +1,5 @@
 import arcade
-from arcade import Window, View
+from arcade import Window, View, Texture
 from arcade.experimental.uislider import UISlider
 from arcade.experimental.uistyle import UISliderStyle
 from arcade.gui import UIManager, UIAnchorWidget, Surface
@@ -10,9 +10,9 @@ class UITextureSlider(UISlider):
     Slider using
     """
 
-    def __init__(self, **kwargs):
-        self.bar = arcade.load_texture("SliderBar.png")
-        self.thumb = arcade.load_texture("SliderThumb.png")
+    def __init__(self, bar: Texture, thumb: Texture, **kwargs):
+        self.bar = bar
+        self.thumb = thumb
         style = UISliderStyle(
             normal_filled_bar=(180, 180, 140),
             hovered_filled_bar=(200, 200, 165),
@@ -59,7 +59,7 @@ class MyView(View):
 
         bar_tex = arcade.load_texture("SliderBar.png")
         thumb_tex = arcade.load_texture("SliderThumb.png")
-        self.button = UITextureSlider()
+        self.button = UITextureSlider(bar_tex, thumb_tex)
 
         # Add button to UIManager, use UIAnchorWidget defaults to center on screen
         self.mng.add(UIAnchorWidget(child=self.button))
@@ -68,7 +68,7 @@ class MyView(View):
         self.mng.enable()
 
     def on_hide_view(self):
-        self.mng.enable()
+        self.mng.disable()
 
     def on_draw(self):
         self.mng.draw()

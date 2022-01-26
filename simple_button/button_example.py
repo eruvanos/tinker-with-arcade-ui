@@ -97,7 +97,7 @@ class MyView(View):
         self.mng.enable()
 
     def on_hide_view(self):
-        self.mng.enable()
+        self.mng.disable()
 
     def on_draw(self):
         self.mng.draw()

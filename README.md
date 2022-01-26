@@ -10,4 +10,5 @@ This repository contains my experiments with the arcade ui.
 | simple_button | ![](simple_button/Recording.gif) |
 |    toggle     |    ![](toggle/Recording.gif)     |
 |   int_field   |   ![](int_field/Recording.gif)   |
+| better_widget | ![](better_widget/Recording.gif) |
 
