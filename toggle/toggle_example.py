@@ -21,6 +21,7 @@ class UIImageToggle(UIInteractiveWidget):
                  height: float = 50,
                  on_texture: arcade.Texture = None,
                  off_texture: arcade.Texture = None,
+                 value=False,
                  scale: float = None,
                  size_hint=None,
                  size_hint_min=None,
@@ -38,7 +39,11 @@ class UIImageToggle(UIInteractiveWidget):
         self.hover_off_tex = arcade.Texture(name=self.normal_off_tex.name + "_brighter", image=enhancer.enhance(1.5))
         self.pressed_off_tex = arcade.Texture(name=self.normal_off_tex.name + "_darker", image=enhancer.enhance(0.5))
 
+        self.value = value
+        self.register_event_type("on_change")
+
         _bind(self, "value", self.trigger_render)
+        _bind(self, "value", self._dispatch_on_change_event)
 
         super().__init__(
             x=x,
@@ -53,11 +58,11 @@ class UIImageToggle(UIInteractiveWidget):
             **kwargs
         )
 
-        self.register_event_type("on_change")
+    def _dispatch_on_change_event(self):
+        self.dispatch_event("on_change", UIOnChangeEvent(self, not self.value, self.value))
 
     def on_click(self, event: UIOnClickEvent):
         self.value = not self.value
-        self.dispatch_event("on_change", UIOnChangeEvent(self, not self.value, self.value))
 
     def do_render(self, surface: Surface):
         self.prepare_render(surface)

@@ -7,13 +7,23 @@ from arcade.gui._property import _Property, _bind
 from arcade.gui.widgets import _Rect
 
 from image_slider.slider_example import UITextureSlider
+from toggle.toggle_example import UIImageToggle
 
 
 class UIWidgetV2(UIWidget):
     """
     UIWidget with native border and padding support
+
+    Todo:
+    - Enable/Disable
+    - Hover
+    - Pressed
+    - Focused (UIWidget got focus e.g. UIInputText, Tab order) [for now use hover]
+    - Visible
+
     """
     rect: _Rect = _Property(_Rect(0, 0, 1, 1))
+    visible = _Property(True)
     border_width = _Property(0)
     border_color = _Property(arcade.color.BLACK)
     bg_color = _Property(None)
@@ -30,6 +40,7 @@ class UIWidgetV2(UIWidget):
 
         # TODO bind all _Properties to self.trigger_full_render
         _bind(self, "rect", self.trigger_full_render)
+        _bind(self, "visible", self.trigger_full_render)
         _bind(self, "border_width", self.trigger_full_render)
         _bind(self, "border_color", self.trigger_full_render)
         _bind(self, "bg_color", self.trigger_full_render)
@@ -91,7 +102,7 @@ class UIWidgetV2(UIWidget):
         should only be used by UIManager!
         """
         should_render = force or not self._rendered
-        if should_render:
+        if should_render and self.visible:
             self.do_render_base(surface)
             self.do_render(surface)
             self._rendered = True
@@ -148,19 +159,30 @@ class MyView(View):
             self.dummy.border_width = int(event.new_value)
             print(event.new_value)
 
-        box = UIBoxLayout()
-        row = UIBoxLayout(vertical=False)
+        on_texture = arcade.load_texture("toggle_green.png")
+        off_texture = arcade.load_texture("toggle_red.png")
+        self.visible_toggle = UIImageToggle(value=True, on_texture=on_texture, off_texture=off_texture, height=20, width=20)
+
+        @self.visible_toggle.event("on_change")
+        def update_visibility(event: UIOnChangeEvent):
+            self.dummy.visible = event.new_value
+            print(event.new_value)
+
+        box = UIBoxLayout(space_between=10)
+        row = UIBoxLayout(vertical=False, space_between=20)
         box.add(row)
 
         labels = UIBoxLayout(align="left")
-        row.add(labels.with_space_around(right=20))
+        row.add(labels)
         labels.add(UILabel(text="Border", text_color=arcade.color.BLACK))
         labels.add(UILabel(text="Padding", text_color=arcade.color.BLACK))
+        labels.add(UILabel(text="Visible", text_color=arcade.color.BLACK))
 
         sliders = UIBoxLayout()
         row.add(sliders)
         sliders.add(self.border_slider)
         sliders.add(self.padding_slider)
+        sliders.add(self.visible_toggle)
 
         box.add(row)
         box.add(self.dummy)
