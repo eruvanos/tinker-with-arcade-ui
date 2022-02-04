@@ -8,9 +8,9 @@ from arcade.gui.widgets import _Rect
 
 class BetterUIInputText(UIInputText):
     def __init__(self, adjust_size=False, **kwargs):
-        super().__init__(**kwargs)
-        self.register_event_type("on_change")
         self.adjust_size = adjust_size
+        self.register_event_type("on_change")
+        super().__init__(**kwargs)
 
         if self.adjust_size:
             self.fit_content()

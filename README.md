@@ -11,4 +11,5 @@ This repository contains my experiments with the arcade ui.
 |    toggle     |    ![](toggle/Recording.gif)     |
 |   int_field   |   ![](int_field/Recording.gif)   |
 | better_widget | ![](better_widget/Recording.gif) |
+|   dropdown    |    ![](dropdown/Recording.gif)   |
 

@@ -1,1 +1,1 @@
-git+https://github.com/pythonarcade/arcade.git
+git+https://github.com/pythonarcade/arcade.git@development
